@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // Swiper.js Setup (as before)
+    // Swiper.js Setup
     var swiper = new Swiper('.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
@@ -11,14 +11,14 @@ $(document).ready(function() {
         }
     });
 
-    // 2. jQuery Animation for Buttons
+    // jQuery Animation for Buttons (if any buttons are added in HTML)
     $('button').on('mouseenter', function() {
         $(this).animate({ opacity: 0.7 }, 200);
     }).on('mouseleave', function() {
         $(this).animate({ opacity: 1 }, 200);
     });
 
-    // 3. Moment.js Countdown Timer
+    // Moment.js Countdown Timer
     var saleEnd = moment().add(5, 'days').endOf('day');
     setInterval(function() {
         var now = moment();
@@ -29,8 +29,7 @@ $(document).ready(function() {
         );
     }, 1000);
 
-    // 4. Chart.js for Sales Chart
-  // Set up Chart.js with an initial configuration
+    // Chart.js Sales Chart Initialization
     var ctx = document.getElementById('salesChart').getContext('2d');
     var salesChart = new Chart(ctx, {
         type: 'bar',
@@ -52,7 +51,7 @@ $(document).ready(function() {
         }
     });
 
-     // Function to update chart data based on the current slide
+    // Function to update chart data based on the current slide
     function updateChart() {
         let currentIndex = swiper.realIndex; // Gets the current active slide index
 
@@ -73,7 +72,6 @@ $(document).ready(function() {
 
     // Initialize the first chart data when the page loads
     updateChart();
-});
 
     // Moment.js Date Formatting for Footer
     $('#lastUpdated').text(moment().format('MMMM Do YYYY, h:mm:ss a'));
