@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    // 1. Swiper.js for Featured Products Slider
+    // Swiper.js Setup (as before)
     var swiper = new Swiper('.swiper-container', {
         navigation: {
             nextEl: '.swiper-button-next',
@@ -7,11 +7,30 @@ $(document).ready(function() {
         },
         loop: true,
         on: {
-            slideChange: updateChart // Calls updateChart when slide changes
+            slideChange: updateChart // Update chart on slide change
         }
     });
 
-    // 2. Chart.js for Sales Chart
+    // 2. jQuery Animation for Buttons
+    $('button').on('mouseenter', function() {
+        $(this).animate({ opacity: 0.7 }, 200);
+    }).on('mouseleave', function() {
+        $(this).animate({ opacity: 1 }, 200);
+    });
+
+    // 3. Moment.js Countdown Timer
+    var saleEnd = moment().add(5, 'days').endOf('day');
+    setInterval(function() {
+        var now = moment();
+        var duration = moment.duration(saleEnd.diff(now));
+        $('#countdown').text(
+            duration.days() + 'd ' + duration.hours() + 'h ' +
+            duration.minutes() + 'm ' + duration.seconds() + 's'
+        );
+    }, 1000);
+
+    // 4. Chart.js for Sales Chart
+  // Set up Chart.js with an initial configuration
     var ctx = document.getElementById('salesChart').getContext('2d');
     var salesChart = new Chart(ctx, {
         type: 'bar',
@@ -19,7 +38,7 @@ $(document).ready(function() {
             labels: ['January', 'February', 'March', 'April', 'May', 'June'],
             datasets: [{
                 label: 'Sales',
-                data: [50, 75, 150, 100, 200, 150], // Initial data for first product
+                data: [50, 75, 150, 100, 200, 150], // Initial data
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
@@ -28,14 +47,14 @@ $(document).ready(function() {
         options: {
             responsive: true,
             plugins: {
-                legend: { position: 'top' },
+                legend: { position: 'top' }
             }
         }
     });
 
-    // 3. Function to update chart data based on the current slide
+     // Function to update chart data based on the current slide
     function updateChart() {
-        let currentIndex = swiper.realIndex; // Gets the active slide index
+        let currentIndex = swiper.realIndex; // Gets the current active slide index
 
         // Sample data for each featured product
         const productSalesData = [
@@ -44,11 +63,18 @@ $(document).ready(function() {
             [70, 110, 100, 150, 120, 170] // Data for Product 3
         ];
 
-        // Update the chart data to match the selected product
-        salesChart.data.datasets[0].data = productSalesData[currentIndex];
-        salesChart.update();
+        // Ensure currentIndex is within bounds of productSalesData
+        if (currentIndex < productSalesData.length) {
+            // Update the chart dataset with the correct data
+            salesChart.data.datasets[0].data = productSalesData[currentIndex];
+            salesChart.update();
+        }
     }
 
     // Initialize the first chart data when the page loads
     updateChart();
+});
+
+    // Moment.js Date Formatting for Footer
+    $('#lastUpdated').text(moment().format('MMMM Do YYYY, h:mm:ss a'));
 });
