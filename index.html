@@ -2,35 +2,106 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>RUN</title>
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/min/moment.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Trends - Environmental Awareness</title>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    
+    <!-- AOS for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
+    <style>
+        /* Basic styling for the website */
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .content { max-width: 800px; margin: auto; }
+        .chart-container { width: 100%; height: 400px; }
+        .articles li { margin-bottom: 10px; }
+    </style>
 </head>
 <body>
-    <!-- Header, Navbar, and Main Content -->
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">Featured Product 1</div>
-            <div class="swiper-slide">Featured Product 2</div>
-            <div class="swiper-slide">Featured Product 3</div>
-        </div>
-        <!-- Navigation buttons for Swiper -->
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-    </div>
+
+<div class="content">
+    <h1>Eco Trends - Environmental Awareness</h1>
     
-    <h3>Current Sale Countdown</h3>
-    <div id="countdown"></div>
+    <!-- Home Section -->
+    <section id="home">
+        <p data-aos="fade-up">Welcome to Eco Trends! Stay informed on the latest in environmental statistics and trends.</p>
+    </section>
 
-    <canvas id="salesChart"></canvas>
+    <!-- Statistics Section with Chart.js -->
+    <section id="statistics">
+        <h2>Environmental Statistics</h2>
+        <div class="chart-container">
+            <canvas id="ecoChart"></canvas>
+        </div>
+    </section>
 
-    <footer>
-        Last Updated: <span id="lastUpdated"></span>
-    </footer>
+    <!-- Articles Section with Moment.js -->
+    <section id="articles">
+        <h2>Latest Articles</h2>
+        <ul class="articles">
+            <li data-aos="fade-right">Article 1 - <span class="publish-date">2024-11-11</span></li>
+            <li data-aos="fade-right">Article 2 - <span class="publish-date">2024-10-23</span></li>
+            <li data-aos="fade-right">Article 3 - <span class="publish-date">2024-09-15</span></li>
+        </ul>
+    </section>
 
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
+    <!-- Contact Section with AOS animations -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form data-aos="fade-up">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+</div>
+
+<!-- Initialize and use JavaScript libraries -->
+<script>
+    $(document).ready(function () {
+        // Initialize AOS library
+        AOS.init();
+
+        // Use Chart.js to create a line chart
+        var ctx = document.getElementById('ecoChart').getContext('2d');
+        var ecoChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'CO2 Emissions (Million Tons)',
+                    data: [120, 125, 130, 128, 134, 140],
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        // Use Moment.js to format publish dates
+        $('.publish-date').each(function () {
+            var dateText = $(this).text();
+            $(this).text(moment(dateText).format('MMMM Do, YYYY'));
+        });
+    });
+</script>
+
 </body>
 </html>
